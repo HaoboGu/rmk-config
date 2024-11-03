@@ -1,4 +1,6 @@
 [values]
-keyboard_type = 'split'
-split_microcontroller = 'nrf52840'
-connection = 'BLE'
+keyboard_type = "split"
+microcontroller_family = "nrf"
+split_microcontroller = "nrf52840"
+connection = "BLE"
+target = "thumbv7em-none-eabihf"
