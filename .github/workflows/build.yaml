@@ -17,14 +17,26 @@ jobs:
         run: rustup target add thumbv7em-none-eabihf thumbv6m-none-eabi thumbv7em-none-eabi
       - name: Install cargo-make
         run: cargo install --force cargo-make
+      - name: Install generate
+        run: cargo install --force cargo-generate
       - name: Install flip link
         run: cargo install --force flip-link
+      - name: Generate template
+        run: cargo generate --git https://github.com/HaoboGu/rmk-template --values-file=./template-config.toml --name rmk
+
+      - name: Prebuild steps
+        run: sed -i 's/xxxxxxxxxx/0xada52840/g' ./rmk/Makefile.toml && cp ./keyboard.toml ./rmk && cp ./vial.json ./rmk/vial.json
+
       - name: Build rmk
         run: cargo build --release
+        working-directory: ./rmk
+
       - name: build uf2 firmware file
         run: cargo make uf2 --release 
+        working-directory: ./rmk
+
       - name: Archive (rmk-firmware)
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: rmk.uf2
+          path: ./rmk/*.uf2

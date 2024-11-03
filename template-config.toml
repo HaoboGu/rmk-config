@@ -1,0 +1,4 @@
+[values]
+keyboard_type = 'split'
+split_microcontroller = 'nrf52840'
+connection = 'BLE'
